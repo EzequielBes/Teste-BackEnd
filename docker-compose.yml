@@ -1,44 +1,44 @@
 
 services:
-  bancoapi_sqlserver:
+  fleetapi_sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: bancoapi_sqlserver_container
+    container_name: fleetapi_sqlserver_container
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: "YourStrong!Passw0rd"
       MSSQL_PID: "Developer"
     networks:
-      - bancoapi-rede
+      - fleetapi-rede
     ports:
       - "1433:1433"
 
-  bancoapi_redis:
+  fleetapi_redis:
     image: redis:latest
-    container_name: bancoapi_redis_container
+    container_name: fleetapi_redis_container
     networks:
-      - bancoapi-rede
+      - fleetapi-rede
     ports:
       - "6379:6379"
 
-  bancoapi_mongodb:
+  fleetapi_mongodb:
     image: mongo:latest
-    container_name: bancoapi_mongodb_container
+    container_name: fleetapi_mongodb_container
     environment:
       MONGO_INITDB_DATABASE: fleet_audit
     networks:
-      - bancoapi-rede
+      - fleetapi-rede
     ports:
       - "27017:27017"
 
-  bancoapi_rabbitmq:
+  fleetapi_rabbitmq:
     image: rabbitmq:3-management
-    container_name: bancoapi_rabbitmq_container
+    container_name: fleetapi_rabbitmq_container
     ports:
       - "5672:5672"
       - "15672:15672"
     networks:
-      - bancoapi-rede
+      - fleetapi-rede
 
 networks:
-  bancoapi-rede:
+  fleetapi-rede:
     driver: bridge

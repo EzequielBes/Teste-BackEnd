@@ -14,7 +14,7 @@ async function bootstrap() {
     app.useLogger(app.get(CustomLogger))
   app.useGlobalPipes(new ValidationPipe());
   const swaggerConfig = new DocumentBuilder()
-  .setTitle('API BANCO')
+  .setTitle('Fleet Management API')
   .setDescription('')
   .addBearerAuth()
   .setVersion('0.0.1')

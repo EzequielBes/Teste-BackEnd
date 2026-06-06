@@ -10,7 +10,7 @@ const config: DataSourceOptions = {
   port: Number(process.env.DB_PORT || 1433),
   username: `${process.env.DB_USER || 'sa'}`,
   password: `${process.env.DB_PASSWORD || 'YourStrong!Passw0rd'}`,
-  database: `${process.env.DB_NAME || 'bancoapi_db'}`,
+  database: `${process.env.DB_NAME || 'fleetapi_db'}`,
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   migrations: [__dirname + '/../**/migrations/*{.ts,.js}'],
   synchronize: true,
