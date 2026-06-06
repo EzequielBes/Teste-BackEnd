@@ -1,0 +1,51 @@
+[
+  {
+    "brand": "Toyota",
+    "models": [
+      {
+        "name": "Corolla",
+        "vehicles": [
+          {
+            "license_plate": "ABC-1234",
+            "chassis": "CH1234567890ABCDE",
+            "renavam": "12345678901",
+            "year": 2022
+          },
+          {
+            "license_plate": "DEF-5678",
+            "chassis": "CH0987654321FEDCB",
+            "renavam": "10987654321",
+            "year": 2023
+          }
+        ]
+      },
+      {
+        "name": "Hilux",
+        "vehicles": [
+          {
+            "license_plate": "GHI-9012",
+            "chassis": "CH1357924680XYZ12",
+            "renavam": "13579246801",
+            "year": 2021
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "brand": "Ford",
+    "models": [
+      {
+        "name": "Ranger",
+        "vehicles": [
+          {
+            "license_plate": "JKL-3456",
+            "chassis": "CH2468013579ASDFG",
+            "renavam": "24680135791",
+            "year": 2024
+          }
+        ]
+      }
+    ]
+  }
+]

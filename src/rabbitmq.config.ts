@@ -13,7 +13,7 @@ export class RabbitOptions implements RabbitOptionsFactory {
   createRabbitOptions(): RabbitMQModuleOptions {
     return {
       connectionString: "amqp://localhost:5672",
-      delayExchangeName: "transfer-dealyed-exchange",
+      delayExchangeName: "unused-delay-exchange",
       assertExchanges: [
         {
           name: "transfer-exchange",
@@ -29,7 +29,7 @@ export class RabbitOptions implements RabbitOptionsFactory {
             routingKey: "transaction",
             prefetch: Number(process.env.RABBIT_PREFETCH ?? 10),
             retryStrategy: {
-              enabled: true,
+              enabled: false,
               maxAttempts: 5,
               delay: (attempt: number) => {
                 return attempt * 5000;
@@ -47,7 +47,7 @@ export class RabbitOptions implements RabbitOptionsFactory {
             routingKey: "reversal.transaction",
             prefetch: Number(process.env.RABBIT_PREFETCH ?? 10),
             retryStrategy: {
-              enabled: true,
+              enabled: false,
               maxAttempts: 5,
               delay: (attempt: number) => {
                 return attempt * 5000;

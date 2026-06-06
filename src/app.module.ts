@@ -1,7 +1,7 @@
 import { AuthService } from "./auth/auth.service";
 import { Interceptor } from "./interceptor";
 import { forwardRef, MiddlewareConsumer, Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 import typeormConfig from "./database/typeorm.config";
 import { AuthModule } from "./auth/auth.module";
 import { DatabaseModule } from "./database/database.module";
@@ -17,6 +17,14 @@ import { ConsumerModule } from "./consumer/consumer.module";
 import { LoggerModule } from "nestjs-pino";
 import { CustomLogger } from "./utils/custom.logger";
 import { HttpLoggerMiddleware } from "./utils/logger.middleware";
+import { CacheModule } from "@nestjs/cache-manager";
+import { redisStore } from "cache-manager-redis-yet";
+import { MongooseModule } from "@nestjs/mongoose";
+import { AuditModule } from "./audit/audit.module";
+
+import { BrandModule } from "./brand/brand.module";
+import { ModelModule } from "./model/model.module";
+import { VehicleModule } from "./vehicle/vehicle.module";
 
 @Module({
   imports: [
@@ -28,11 +36,36 @@ import { HttpLoggerMiddleware } from "./utils/logger.middleware";
       isGlobal: true,
       load: [typeormConfig],
     }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get("MONGO_URI") || "mongodb://localhost:27017/fleet_audit",
+      }),
+      inject: [ConfigService],
+    }),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        store: await redisStore({
+          socket: {
+            host: configService.get("REDIS_HOST") || "localhost",
+            port: Number(configService.get("REDIS_PORT") || 6379),
+          },
+          ttl: Number(configService.get("REDIS_TTL") || 3600),
+        }),
+      }),
+      inject: [ConfigService],
+    }),
     AuthModule,
     DatabaseModule,
     AccountModule,
     AuthModule,
     TransactionModule,
+    BrandModule,
+    ModelModule,
+    VehicleModule,
+    AuditModule,
     LoggerModule.forRoot({
       pinoHttp: {
         level: process.env.NODE_ENV !== "production" ? "debug" : "info",

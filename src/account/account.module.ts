@@ -5,12 +5,15 @@ import { AccountRepository } from "./account-respository";
 import { DatabaseModule } from "../database/database.module";
 import { Module } from "@nestjs/common/decorators";
 import { PasswordService } from "./security/password.service";
+import { SeedService } from "./seed.service";
 
 @Module({
   imports: [DatabaseModule],
   controllers: [AccountController],
-  providers: [AccountService, 
+  providers: [
+    AccountService, 
     PasswordService,
+    SeedService,
     {
       provide:AccountRepository,
       useClass:AccountRepositoryTypeorm

@@ -5,15 +5,18 @@ import { registerAs } from '@nestjs/config';
 dotenv.config({ path: '.env' });
 
 const config: DataSourceOptions = {
-  type: 'postgres',
-  host: `${process.env.DB_HOST}`,
-  port: Number(process.env.DB_PORT),
-  username: `${process.env.DB_USER}`,
-  password: `${process.env.DB_PASSWORD}`,
-  database: `${process.env.DB_NAME}`,
+  type: 'mssql',
+  host: `${process.env.DB_HOST || 'localhost'}`,
+  port: Number(process.env.DB_PORT || 1433),
+  username: `${process.env.DB_USER || 'sa'}`,
+  password: `${process.env.DB_PASSWORD || 'YourStrong!Passw0rd'}`,
+  database: `${process.env.DB_NAME || 'bancoapi_db'}`,
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   migrations: [__dirname + '/../**/migrations/*{.ts,.js}'],
   synchronize: true,
+  extra: {
+    trustServerCertificate: true,
+  },
 };
 
 export default registerAs('typeorm', () => config);
